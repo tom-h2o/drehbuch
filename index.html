@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFOP Trainer</title>
+<link rel="stylesheet" href="css/style.css">
+<script src="https://cdn.cubing.net/v0/js/cubing/twisty" type="module"></script>
+</head>
+<body>
+<header class="app-header">
+  <h1>CFOP Trainer</h1>
+  <nav class="tabs" id="tabs">
+    <button class="tab-btn active" data-tab="cross">Cross</button>
+    <button class="tab-btn" data-tab="f2l">F2L</button>
+    <button class="tab-btn" data-tab="oll">OLL</button>
+    <button class="tab-btn" data-tab="pll">PLL</button>
+    <button class="tab-btn" data-tab="quiz">Quiz</button>
+  </nav>
+</header>
+
+<main id="main">
+  <section id="panel-cross" class="tab-panel active">
+    <div class="panel-intro">
+      <h2>Cross</h2>
+      <p>Das Cross wird intuitiv gelöst, nicht mit auswendig gelernten Algorithmen. Hier ein paar Grundprinzipien und Beispiel-Situationen zum Üben.</p>
+    </div>
+    <div class="card-grid" id="grid-cross"></div>
+  </section>
+
+  <section id="panel-f2l" class="tab-panel">
+    <div class="panel-intro">
+      <h2>F2L &ndash; First Two Layers</h2>
+      <p>41 Standardfälle für das Einsetzen von Ecke und Kante gleichzeitig.</p>
+    </div>
+    <div class="card-grid" id="grid-f2l"></div>
+  </section>
+
+  <section id="panel-oll" class="tab-panel">
+    <div class="panel-intro">
+      <h2>OLL &ndash; Orientation of the Last Layer</h2>
+      <p>Alle 57 Fälle, um die letzte Schicht farblich auszurichten (gelbe Seite oben).</p>
+    </div>
+    <div class="card-grid" id="grid-oll"></div>
+  </section>
+
+  <section id="panel-pll" class="tab-panel">
+    <div class="panel-intro">
+      <h2>PLL &ndash; Permutation of the Last Layer</h2>
+      <p>Alle 21 Fälle, um die letzte Schicht zu permutieren und den Würfel zu lösen.</p>
+    </div>
+    <div class="card-grid" id="grid-pll"></div>
+  </section>
+
+  <section id="panel-quiz" class="tab-panel">
+    <div class="panel-intro">
+      <h2>Quiz</h2>
+      <p>Wähle eine Phase, versuche die Lösung aus dem Kopf, dann aufdecken und selbst bewerten.</p>
+    </div>
+    <div class="quiz-controls">
+      <label for="quiz-phase">Phase:</label>
+      <select id="quiz-phase">
+        <option value="f2l">F2L</option>
+        <option value="oll">OLL</option>
+        <option value="pll">PLL</option>
+      </select>
+      <button id="quiz-start">Neue Runde starten</button>
+      <div class="quiz-stats" id="quiz-stats"></div>
+    </div>
+    <div class="quiz-card-wrap" id="quiz-card-wrap">
+      <p class="quiz-placeholder">Klicke auf &bdquo;Neue Runde starten&ldquo;, um zu beginnen.</p>
+    </div>
+  </section>
+</main>
+
+<footer class="app-footer">
+  <p>CFOP Trainer &middot; lokal, ohne Server, Fortschritt wird im Browser gespeichert.</p>
+</footer>
+
+<script type="module" src="js/app.js"></script>
+</body>
+</html>
