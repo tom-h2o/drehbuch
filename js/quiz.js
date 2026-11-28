@@ -7,7 +7,12 @@ import { F2L_CASES } from './data/f2l.js';
 import { OLL_CASES } from './data/oll.js';
 import { PLL_CASES } from './data/pll.js';
 import { pickWeighted, recordResult, getGroupStats } from './progress.js';
-import { createTwistyPlayer, createPlayButton, createResetButton } from './cardView.js';
+import {
+  createTwistyPlayer,
+  createPlayButton,
+  createResetButton,
+  createNotationLine,
+} from './cardView.js';
 
 const PHASE_CASES = {
   f2l: F2L_CASES,
@@ -15,8 +20,18 @@ const PHASE_CASES = {
   pll: PLL_CASES,
 };
 
+const ADVANCE_DELAY_MS = 900;
+
 let currentCase = null;
 let els = null;
+let advanceTimer = null;
+
+function cancelPendingAdvance() {
+  if (advanceTimer !== null) {
+    clearTimeout(advanceTimer);
+    advanceTimer = null;
+  }
+}
 
 function renderStats(phaseKey) {
   const cases = PHASE_CASES[phaseKey];
@@ -28,9 +43,13 @@ function renderStats(phaseKey) {
 }
 
 function nextCase() {
+  // Ein noch ausstehender Auto-Weiter-Timer (nach einer Bewertung) darf den
+  // jetzt gezogenen Fall nicht kurz darauf wieder ersetzen.
+  cancelPendingAdvance();
   const phaseKey = els.phaseSelect.value;
   const cases = PHASE_CASES[phaseKey];
-  currentCase = pickWeighted(cases);
+  const previousId = currentCase ? currentCase.id : null;
+  currentCase = pickWeighted(cases, previousId);
   renderQuizCard(phaseKey);
   renderStats(phaseKey);
 }
@@ -83,9 +102,7 @@ function renderQuizCard(phaseKey) {
     hiddenInfo.appendChild(tipEl);
   }
 
-  const algEl = document.createElement('p');
-  algEl.innerHTML = `<span class="notation-label">Lösung:</span> <code>${currentCase.alg}</code>`;
-  hiddenInfo.appendChild(algEl);
+  hiddenInfo.appendChild(createNotationLine('Lösung', currentCase.alg));
 
   const controls = document.createElement('div');
   controls.className = 'card-controls';
@@ -123,13 +140,15 @@ function renderQuizCard(phaseKey) {
     recordResult(currentCase.id, correct);
     feedback.textContent = correct
       ? 'Gespeichert: richtig. Nächster Fall …'
-      : 'Gespeichert: falsch. Dieser Fall kommt bald wieder dran.';
+      : 'Gespeichert: falsch. Dieser Fall wird ab jetzt häufiger abgefragt.';
     rightBtn.disabled = true;
     wrongBtn.disabled = true;
     renderStats(phaseKey);
-    setTimeout(() => {
+    cancelPendingAdvance();
+    advanceTimer = setTimeout(() => {
+      advanceTimer = null;
       nextCase();
-    }, 900);
+    }, ADVANCE_DELAY_MS);
   }
 
   rightBtn.addEventListener('click', () => rate(true));
@@ -151,7 +170,13 @@ export function initQuiz() {
   });
 
   els.phaseSelect.addEventListener('change', () => {
-    renderStats(els.phaseSelect.value);
+    // Laeuft bereits eine Runde, sofort einen Fall der neuen Phase zeigen,
+    // damit Karte, Bewertung und Statistik zur gewaehlten Phase passen.
+    if (currentCase) {
+      nextCase();
+    } else {
+      renderStats(els.phaseSelect.value);
+    }
   });
 
   renderStats(els.phaseSelect.value);

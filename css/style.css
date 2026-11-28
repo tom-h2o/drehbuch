@@ -110,6 +110,16 @@ main {
   display: block;
 }
 
+.status-banner {
+  background: rgba(255, 95, 109, 0.12);
+  border: 1px solid var(--wrong);
+  color: var(--text);
+  border-radius: var(--radius);
+  padding: 0.75rem 1rem;
+  margin-bottom: 1.25rem;
+  font-size: 0.9rem;
+}
+
 .panel-intro h2 {
   margin: 0 0 0.35rem;
 }

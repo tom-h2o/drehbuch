@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CFOP Trainer</title>
 <link rel="stylesheet" href="css/style.css">
-<script src="https://cdn.cubing.net/v0/js/cubing/twisty" type="module"></script>
+<script src="https://cdn.cubing.net/v0/js/cubing/twisty" type="module" onerror="document.documentElement.dataset.twistyFailed = '1'"></script>
 </head>
 <body>
 <header class="app-header">
@@ -74,8 +74,22 @@
 </main>
 
 <footer class="app-footer">
-  <p>CFOP Trainer &middot; lokal, ohne Server, Fortschritt wird im Browser gespeichert.</p>
+  <p>CFOP Trainer &middot; läuft komplett im Browser, kein Backend nötig &middot; Fortschritt wird lokal im Browser gespeichert &middot; 3D-Würfel via cubing.js (Internetverbindung nötig).</p>
 </footer>
+
+<script>
+  // JavaScript-Module (js/app.js) werden von Browsern unter file:// blockiert.
+  // Dieses klassische Skript laeuft trotzdem und erklaert, was zu tun ist.
+  if (location.protocol === 'file:') {
+    var fileBanner = document.createElement('div');
+    fileBanner.className = 'status-banner';
+    fileBanner.setAttribute('role', 'alert');
+    fileBanner.textContent =
+      'Diese Seite muss über einen Webserver geöffnet werden – direkt als Datei (file://) blockiert der Browser die JavaScript-Module. ' +
+      'Im Projektordner z. B. „npx serve“ oder „python3 -m http.server“ starten und die angezeigte localhost-Adresse öffnen.';
+    document.getElementById('main').prepend(fileBanner);
+  }
+</script>
 
 <script type="module" src="js/app.js"></script>
 </body>
