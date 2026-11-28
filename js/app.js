@@ -8,6 +8,7 @@ import { OLL_CASES } from './data/oll.js';
 import { PLL_CASES } from './data/pll.js';
 import { renderCards } from './cardView.js';
 import { initQuiz } from './quiz.js';
+import { watchViewerLoad } from './viewerStatus.js';
 
 const renderedTabs = new Set(['cross']);
 
@@ -51,6 +52,7 @@ function initCardGrids() {
 }
 
 function init() {
+  watchViewerLoad();
   initTabs();
   initCardGrids();
   initQuiz();

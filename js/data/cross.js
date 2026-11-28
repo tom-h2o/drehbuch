@@ -19,17 +19,17 @@ export const CROSS_TIPS = [
   {
     "id": "cross-03",
     "name": "Kante direkt einsetzen",
-    "tip": "Liegt eine Kante bereits richtig orientiert in der oberen Schicht, dreh sie einfach mit einem D-Zug über die passende Ecke und führe sie mit einem Face-Turn ein, ohne sie vorher zu drehen.",
-    "setup": "F' D2",
-    "alg": "D2 F",
+    "tip": "Liegt eine Kreuzkante richtig orientiert (Weiß zeigt nach oben) in der oberen Schicht, dreh die obere Schicht (U), bis die Kante über ihrem passenden Mittelstein steht, und setze sie mit einem Doppelzug (hier F2) ein, ohne sie vorher zu drehen.",
+    "setup": "F2 U",
+    "alg": "U' F2",
     "group": "CROSS"
   },
   {
     "id": "cross-04",
     "name": "Falsch orientierte Kante einsetzen",
     "tip": "Zeigt die Kantenfarbe seitlich statt nach oben, führe sie mit einer Kombination wie \"in die Seite einfädeln, drehen, wieder rausziehen\" ein, statt sie erst umzudrehen und dann einzusetzen – das spart Züge.",
-    "setup": "F' D2 F",
-    "alg": "F' D2 F",
+    "setup": "F R F'",
+    "alg": "F R' F'",
     "group": "CROSS"
   },
   {
@@ -52,8 +52,8 @@ export const CROSS_TIPS = [
     "id": "cross-07",
     "name": "X-Cross (Fortgeschritten)",
     "tip": "Fortgeschrittene Löser lösen beim Cross gleich das erste F2L-Paar mit (\"X-Cross\"), indem sie die letzte Kreuzkante bewusst später einsetzen und stattdessen zuerst ein Eck-Kante-Paar kombinieren.",
-    "setup": "R U' R' F' U' F",
-    "alg": "F' U F R U R'",
+    "setup": "R' U' R U R",
+    "alg": "R' U' R' U R",
     "group": "CROSS"
   },
   {
